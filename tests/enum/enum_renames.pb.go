@@ -26,11 +26,11 @@ const (
 type Flavour int32
 
 const (
-	Flavour_UMAMI  Flavour = 0
-	Flavour_SWEET  Flavour = 1
-	Flavour_SALTY  Flavour = 2
-	Flavour_SOUR   Flavour = 3
-	Flavour_BITTER Flavour = 4
+	Flavor_UMAMI  Flavour = 0
+	Flavor_SWEET  Flavour = 1
+	Flavor_SALTY  Flavour = 2
+	Flavor_SOUR   Flavour = 3
+	Flavor_BITTER Flavour = 4
 )
 
 // Enum value maps for Flavor.
@@ -179,10 +179,10 @@ func (RenamedNested) EnumDescriptor() ([]byte, []int) {
 type Holiday_Route int32
 
 const (
-	Holiday_INVALID Holiday_Route = 0
-	Holiday_FAST    Holiday_Route = 1
-	Holiday_SLOW    Holiday_Route = 2
-	Holiday_SCENIC  Holiday_Route = 3
+	Vacation_INVALID Holiday_Route = 0
+	Vacation_FAST    Holiday_Route = 1
+	Vacation_SLOW    Holiday_Route = 2
+	Vacation_SCENIC  Holiday_Route = 3
 )
 
 // Enum value maps for Vacation_Route.
@@ -319,7 +319,7 @@ func (x *Holiday) GetInner() Holiday_Route {
 	if x != nil {
 		return x.Inner
 	}
-	return Holiday_INVALID
+	return Vacation_INVALID
 }
 
 var File_tests_enum_enum_renames_proto protoreflect.FileDescriptor
