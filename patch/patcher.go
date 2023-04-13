@@ -53,6 +53,7 @@ type Patcher struct {
 	types          map[protogen.GoIdent]string
 	fieldTypes     map[types.Object]string
 	noGetters      map[protogen.GoIdent]types.Object
+	noReflect      map[protogen.GoIdent]types.Object
 }
 
 // NewPatcher returns an initialized Patcher for gen.
@@ -74,6 +75,7 @@ func NewPatcher(gen *protogen.Plugin) (*Patcher, error) {
 		types:          make(map[protogen.GoIdent]string),
 		fieldTypes:     make(map[types.Object]string),
 		noGetters:      make(map[protogen.GoIdent]types.Object),
+		noReflect:      make(map[protogen.GoIdent]types.Object),
 	}
 	return p, p.scan()
 }
@@ -115,6 +117,10 @@ func (p *Patcher) scanFile(f *protogen.File) {
 func (p *Patcher) scanEnum(e *protogen.Enum, parent *protogen.Message) {
 	opts := enumOptions(e)
 	lints := fileLintOptions(e.Desc)
+	noReflect := fileNoReflectOptions(e.Desc)
+	if noReflect {
+		p.noReflect[e.GoIdent] = nil
+	}
 
 	// Rename enum?
 	newName := opts.GetName()
@@ -191,6 +197,10 @@ func (p *Patcher) scanEnumValue(v *protogen.EnumValue, parent *protogen.Message)
 func (p *Patcher) scanMessage(m *protogen.Message, parent *protogen.Message) {
 	opts := messageOptions(m)
 	lints := fileLintOptions(m.Desc)
+	noReflect := fileNoReflectOptions(m.Desc)
+	if noReflect {
+		p.noReflect[m.GoIdent] = nil
+	}
 
 	// Rename message?
 	newName := opts.GetName()
@@ -605,6 +615,14 @@ func (p *Patcher) checkGoFiles() error {
 		p.noGetters[id] = obj
 	}
 
+	for id := range p.noReflect {
+		obj, _ := p.find(id)
+		if obj == nil {
+			continue
+		}
+		p.noReflect[id] = obj
+	}
+
 	return nil
 }
 
@@ -736,6 +754,7 @@ func (p *Patcher) patchGoFiles() error {
 		p.patchIdent(id, obj, true)
 		p.patchTags(id, obj)
 		p.patchNoGetters(id, obj)
+		p.patchNoReflect(id, obj)
 		// if id.IsExported() {
 		// 	f := p.fset.File(id.NamePos)
 		// 	log.Printf("Ident %s:\t%s @ %s", typeString(obj), id.Name, f.Name())

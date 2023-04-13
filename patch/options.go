@@ -31,3 +31,7 @@ func oneofOptions(o *protogen.Oneof) *gopb.Options {
 func fileLintOptions(d protoreflect.Descriptor) *gopb.LintOptions {
 	return proto.GetExtension(d.ParentFile().Options(), gopb.E_Lint).(*gopb.LintOptions)
 }
+
+func fileNoReflectOptions(d protoreflect.Descriptor) bool {
+	return proto.GetExtension(d.ParentFile().Options(), gopb.E_NoReflect).(bool)
+}

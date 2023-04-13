@@ -97,4 +97,7 @@ message LintOptions {
 
 extend google.protobuf.FileOptions {
 	optional LintOptions lint = 7001;
+	// The no_reflect option disables the protobuf reflection for this file.
+	// It is useful if the marshaling and unmarshaling is done by a custom code, e.g. by vt-protobuf.
+	optional bool no_reflect = 7002;
 }
