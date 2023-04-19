@@ -71,6 +71,10 @@ func (p *Patcher) patchNoReflect(id *ast.Ident, obj types.Object) {
 		comments = append(comments, g.List...)
 	}
 	file := p.fileOf(id)
+	if file == nil {
+		log.Printf("Warning: file not found: %v", obj)
+		return
+	}
 	for k, v := range pos {
 		found := false
 		for i, vv := range file.Decls {
