@@ -54,6 +54,8 @@ type Patcher struct {
 	fieldTypes     map[types.Object]string
 	noGetters      map[protogen.GoIdent]types.Object
 	noReflect      map[protogen.GoIdent]types.Object
+
+	seenFiles map[string]map[*ast.File]struct{}
 }
 
 // NewPatcher returns an initialized Patcher for gen.
@@ -76,6 +78,7 @@ func NewPatcher(gen *protogen.Plugin) (*Patcher, error) {
 		fieldTypes:     make(map[types.Object]string),
 		noGetters:      make(map[protogen.GoIdent]types.Object),
 		noReflect:      make(map[protogen.GoIdent]types.Object),
+		seenFiles:      make(map[string]map[*ast.File]struct{}),
 	}
 	return p, p.scan()
 }
@@ -764,6 +767,7 @@ func (p *Patcher) patchGoFiles() error {
 	log.Printf("\nUses\n")
 	for id, obj := range p.info.Uses {
 		p.patchTypeUsage(id, obj)
+		p.renameType(id, obj)
 		p.patchIdent(id, obj, false)
 	}
 
