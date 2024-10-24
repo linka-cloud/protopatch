@@ -68,6 +68,23 @@ func (p *Patcher) patchTypeDef(id *ast.Ident, obj types.Object) {
 }
 
 func (p *Patcher) patchTypeUsage(id *ast.Ident, obj types.Object) {
+	if rename, ok := p.objectRenames[obj]; ok {
+		f := p.fileOf(id)
+		if f == nil || id.Obj == nil {
+			return
+		}
+		s, ok := p.seenFiles[id.Obj.Name]
+		if !ok {
+			s = make(map[*ast.File]struct{})
+		}
+		if _, ok := s[f]; ok {
+			return
+		}
+		s[f] = struct{}{}
+		p.seenFiles[id.Obj.Name] = s
+		renameType(f, p.info, id.Obj.Name, rename)
+		return
+	}
 	desiredType, ok := p.fieldTypes[obj]
 	if !ok {
 		return
@@ -75,7 +92,7 @@ func (p *Patcher) patchTypeUsage(id *ast.Ident, obj types.Object) {
 	// we don't want to modify the getter body,
 	// so we check if we are in the getter declaration body ?
 	node := ast.Node(id)
-	for{
+	for {
 		node = p.findParentNode(node)
 		if node == nil {
 			break
@@ -93,7 +110,7 @@ func (p *Patcher) patchTypeUsage(id *ast.Ident, obj types.Object) {
 		originalType = t.Name()
 	case *types.Pointer:
 		originalType = t.String()
-		desiredType = "*"+desiredType
+		desiredType = "*" + desiredType
 	case *types.Signature:
 		if t.Results().Len() != 1 {
 			return

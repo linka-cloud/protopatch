@@ -52,6 +52,8 @@ type Patcher struct {
 	fieldEmbeds    map[types.Object]string
 	types          map[protogen.GoIdent]string
 	fieldTypes     map[types.Object]string
+
+	seenFiles map[string]map[*ast.File]struct{}
 }
 
 // NewPatcher returns an initialized Patcher for gen.
@@ -72,6 +74,7 @@ func NewPatcher(gen *protogen.Plugin) (*Patcher, error) {
 		fieldEmbeds:    make(map[types.Object]string),
 		types:          make(map[protogen.GoIdent]string),
 		fieldTypes:     make(map[types.Object]string),
+		seenFiles:      make(map[string]map[*ast.File]struct{}),
 	}
 	return p, p.scan()
 }

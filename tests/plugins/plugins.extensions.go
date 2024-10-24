@@ -1,4 +1,4 @@
-package plugin
+package plugins
 
 type IPAddresses []*IPAddress
 
