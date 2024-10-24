@@ -21,6 +21,7 @@ $(proto_files): tools Makefile
 	protoc --experimental_allow_proto3_optional \
 		$(proto_includes) \
 		--go-patch_out=plugin=go-grpc,paths=import,module=$(go_module):. \
+		--go-patch_out=plugin=go-vtproto,features=marshal+unmarshal+size+equal+clone,paths=import,module=$(go_module):. \
 		$@
 
 	# protoc-gen-go-grpc
@@ -29,9 +30,18 @@ $(proto_files): tools Makefile
 		--go-patch_out=plugin=go,paths=import,module=$(go_module):. \
 		$@
 
+	# protoc-gen-go-vtproto
+	protoc --experimental_allow_proto3_optional \
+		$(proto_includes) \
+		--go-patch_out=plugin=go-vtproto,features=marshal+unmarshal+size+equal+clone,paths=import,module=$(go_module):. \
+		$@
+
 	# protoc-gen-validate
 	if grep -q validate/validate\.proto $@; then protoc --experimental_allow_proto3_optional \
 		$(proto_includes) \
 		--go-patch_out=plugin=validate,paths=source_relative,lang=go:. \
 		$@ ; \
 	fi
+
+	rm -f tests/no_reflect/no_reflect_vtproto.pb.go
+

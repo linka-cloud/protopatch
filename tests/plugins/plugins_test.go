@@ -1,4 +1,4 @@
-package plugin
+package plugins
 
 import (
 	"testing"
@@ -7,10 +7,10 @@ import (
 )
 
 var (
-	loopback4 = &IPAddress{Address: &IPAddress_IPV4{"127.0.0.1"}}
-	loopback6 = &IPAddress{Address: &IPAddress_IPV6{"0:0:0:0:0:0:0:1"}}
-	bogus4    = &IPAddress{Address: &IPAddress_IPV4{"999.999.999.999"}}
-	bogus6    = &IPAddress{Address: &IPAddress_IPV6{"not.an.ip.address"}}
+	loopback4 = &IPAddress{Address: &IPAddress_IPv4{"127.0.0.1"}}
+	loopback6 = &IPAddress{Address: &IPAddress_IPv6{"0:0:0:0:0:0:0:1"}}
+	bogus4    = &IPAddress{Address: &IPAddress_IPv4{"999.999.999.999"}}
+	bogus6    = &IPAddress{Address: &IPAddress_IPv6{"not.an.ip.address"}}
 )
 
 func TestInterfaceStatus(t *testing.T) {

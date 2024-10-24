@@ -12,6 +12,8 @@ require (
 	google.golang.org/protobuf v1.34.2
 )
 
+require github.com/planetscale/vtprotobuf v0.6.0
+
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/lyft/protoc-gen-star/v2 v2.0.4-0.20230330145011-496ad1ac90a4 // indirect

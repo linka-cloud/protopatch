@@ -5,7 +5,7 @@ package tests.plugin;
 import "patch/go.proto";
 import "validate/validate.proto";
 
-option go_package = "github.com/alta/protopatch/tests/plugin";
+option go_package = "github.com/alta/protopatch/tests/plugins";
 
 message Interface {
 	string name = 1 [(validate.rules).string = {min_len: 2, max_len: 10, pattern: "[0-9a-zA-Z.-_]*"}];
@@ -19,20 +19,21 @@ message Interface {
 		defined_only: true,
 		not_in: [0]
 	}];
-	repeated IPAddress addresses = 3;
+	repeated IpAddress addresses = 3;
 }
 
-message IPAddress {
+message IpAddress {
+	option (go.message).name = "IPAddress";
 	oneof Address {
-		string ipv4 = 3 [(go.field).name = "IPV4", (validate.rules).string.ipv4 = true];
-		string ipv6 = 4 [(go.field).name = "IPV6", (validate.rules).string.ipv6 = true];
+		string ipv4 = 3 [(go.field).name = "IPv4", (validate.rules).string.ipv4 = true];
+		string ipv6 = 4 [(go.field).name = "IPv6", (validate.rules).string.ipv6 = true];
 	}
 }
 
 message InterfaceWithCustomTypes {
 	string name = 1 [(go.field).type = "Name", (validate.rules).string = {min_len: 2, max_len: 10, pattern: "[0-9a-zA-Z.-_]*"}];
 
-	repeated IPAddress addresses = 3 [(go.field).type = "IPAddresses"];
+	repeated IpAddress addresses = 3 [(go.field).type = "IPAddresses"];
 
 	repeated string aliases = 4 [(go.field).type = "Names", (validate.rules).repeated = {max_items: 10}, (validate.rules).repeated .items.string = {min_len: 2, max_len: 10, pattern: "[0-9a-zA-Z.-_]*"}];
 }
