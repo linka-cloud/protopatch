@@ -5,7 +5,7 @@ import (
 
 	"google.golang.org/protobuf/proto"
 
-	"github.com/alta/protopatch/tests"
+	"go.linka.cloud/protopatch/tests"
 )
 
 func TestURL(t *testing.T) {
@@ -81,9 +81,9 @@ func TestEmbedLintedField(t *testing.T) {
 	apiPath := "/customers/{customer_id}/resources/{resource_id}"
 	m := &EmbedLintedField{
 		IDFields: &IDFields{
-			ID:            "0",
-			CustomerID:    "1",
-			APIPath:       apiPath,
+			ID:         "0",
+			CustomerID: "1",
+			APIPath:    apiPath,
 		},
 	}
 	tests.ValidateMessage(t, m)

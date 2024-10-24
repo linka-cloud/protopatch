@@ -4,7 +4,7 @@ package tests.no_reflect;
 
 import "patch/go.proto";
 
-option go_package = "github.com/alta/protopatch/tests/no_reflect";
+option go_package = "go.linka.cloud/protopatch/tests/no_reflect";
 
 option (go.no_reflect) = true;
 

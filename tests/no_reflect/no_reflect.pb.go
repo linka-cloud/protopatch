@@ -7,7 +7,7 @@
 package no_reflect
 
 import (
-	_ "github.com/alta/protopatch/patch/gopb"
+	_ "go.linka.cloud/protopatch/patch/gopb"
 
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )

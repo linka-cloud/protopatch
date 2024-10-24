@@ -1,7 +1,7 @@
 package patch
 
 import (
-	"github.com/alta/protopatch/patch/gopb"
+	"go.linka.cloud/protopatch/patch/gopb"
 
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"

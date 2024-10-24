@@ -3,7 +3,7 @@ package plugins
 import (
 	"testing"
 
-	"github.com/alta/protopatch/tests"
+	"go.linka.cloud/protopatch/tests"
 )
 
 var (

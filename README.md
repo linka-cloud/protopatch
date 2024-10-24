@@ -1,12 +1,12 @@
 # protopatch
 
-[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/github.com/alta/protopatch) [![build status](https://img.shields.io/github/actions/workflow/status/alta/protopatch/go.yaml.svg?branch=main)](https://github.com/alta/protopatch/actions)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white)](https://pkg.go.dev/go.linka.cloud/protopatch) [![build status](https://img.shields.io/github/actions/workflow/status/alta/protopatch/go.yaml.svg?branch=main)](https://go.linka.cloud/protopatch/actions)
 
 Patch `protoc` plugin output with Go-specific features. The `protoc-gen-go-patch` command wraps calls to Go code generators like [`protoc-gen-go`](https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go) or [`protoc-gen-go-grpc`](https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc) and patches the Go syntax before being written to disk.
 
 ## Install
 
-`go install github.com/alta/protopatch/cmd/protoc-gen-go-patch`
+`go install go.linka.cloud/protopatch/cmd/protoc-gen-go-patch`
 
 ## Usage
 
@@ -15,7 +15,7 @@ After installing `protoc-gen-go-patch`, use it by specifying it with a `--go-pat
 ```shell
 protoc \
 	-I . \
-	-I `go list -m -f {{.Dir}} github.com/alta/protopatch` \
+	-I `go list -m -f {{.Dir}} go.linka.cloud/protopatch` \
 	-I `go list -m -f {{.Dir}} google.golang.org/protobuf` \
 	--go-patch_out=plugin=go,paths=source_relative:. \
 	--go-patch_out=plugin=go-grpc,paths=source_relative:. \

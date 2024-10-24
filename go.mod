@@ -1,4 +1,4 @@
-module github.com/alta/protopatch
+module go.linka.cloud/protopatch
 
 go 1.21.0
 
