@@ -171,10 +171,10 @@ func (p *Patcher) scanEnumValue(v *protogen.EnumValue, parent *protogen.Message)
 
 	// Rename enum value?
 	newName := opts.GetName()
+	if newName == "" {
+		newName = replacePrefix(v.GoIdent.GoName, parentIdent.GoName, p.nameFor(parentIdent))
+	}
 	if lints.GetValues() || lints.GetAll() {
-		if newName == "" {
-			newName = replacePrefix(v.GoIdent.GoName, parentIdent.GoName, p.nameFor(parentIdent))
-		}
 		vname := string(v.Desc.Name())
 		if vname == strings.ToUpper(vname) && strings.HasSuffix(newName, vname) {
 			newName = strings.TrimSuffix(newName, vname) + "_" + strings.ToLower(vname)
